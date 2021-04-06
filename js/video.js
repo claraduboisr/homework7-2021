@@ -8,8 +8,7 @@ window.addEventListener("load", function() {
 document.querySelector("#play").addEventListener("click", function () {
 	console.log("Play Video");
 	video.play();
-	var volume_video = document.querySelector("#slider").value;
-	document.getElementById("volume").innerHTML = volume_video;
+	document.querySelector("#volume").innerHTML=video.volume*100+"%"
 
 });
 
@@ -33,12 +32,13 @@ document.querySelector("#faster").addEventListener("click", function () {
 document.querySelector("#skip").addEventListener("click", function () {
 	console.log("Orginial location ", video.currentTime);
 
-	if (video.currentTime >= video.duration) {
-		video.currentTime = 0
-		console.log("New location ", video.currentTime);
-	} else {
+	if (video.duration - video.currentTime > 15) {
 		video.currentTime += 15;
-		console.log("New location ", video.currentTime);
+		console.log("New location " + video.currentTime)
+	}
+	else{
+		video.currentTime = 0;
+		console.log("New location " + video.currentTime)
 	}
 	video.play();
 });
@@ -53,19 +53,17 @@ document.querySelector("#mute").addEventListener("click", function () {
 		video.muted=true
 		document.querySelector("#mute").innerHTML = "Unmute";
 	}
-
 });
 
-/*The oninput event occurs when an element gets user input.*/
-slider.oninput = function(){
-  document.getElementById("volume").innerHTML = document.getElementById("slider").value;
-  video.volume = this.value/100;
-  console.log (video.volume)
-}
+document.querySelector("#slider").addEventListener("click", function(){
+	document.getElementById("volume").innerHTML = document.querySelector("#slider").value;
+	video.volume = document.getElementById("volume").innerHTML / 100;
+	document.getElementById("volume").innerHTML = document.getElementById("volume").innerHTML + "%";
+	console.log(video.volume);
+});
 
 document.querySelector("#vintage").addEventListener("click", function () {
 	document.querySelector("Video").className='oldSchool';
-
 });
 
 document.querySelector("#orig").addEventListener("click", function () {
